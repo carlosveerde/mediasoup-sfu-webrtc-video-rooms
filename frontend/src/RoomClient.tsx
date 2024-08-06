@@ -1,52 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
-const RoomClient: React.FC = () => {
-  const [socket, setSocket] = useState<any>(null);
-  const [roomId, setRoomId] = useState<string>('');
-  const [name, setName] = useState<string>('');
+class RoomClient {
+  socket: Socket;
+  localStream: MediaStream | null = null;
+  roomId: string;
+  name: string;
 
-  useEffect(() => {
-    const socket = io('https://localhost:3016'); // Certifique-se de que o URL está correto
-    setSocket(socket);
+  constructor(roomId: string, name: string) {
+    this.roomId = roomId;
+    this.name = name;
+    this.socket = io('https://localhost:3016'); // Alterado para uso direto de `io`
 
-    socket.on('connect', () => {
+    this.socket.on('connect', () => {
       console.log('Connected to server');
+      this.joinRoom();
     });
 
-    return () => {
-      socket.close();
-    };
-  }, []);
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
+  }
 
-  const joinRoom = () => {
-    if (socket && roomId && name) {
-      socket.emit('joinRoom', { room_id: roomId, name }, (response: any) => {
-        console.log('Joined room', response);
+  async joinRoom() {
+    try {
+      this.localStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
       });
-    }
-  };
 
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Room ID"
-        value={roomId}
-        onChange={(e) => setRoomId(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Your Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button onClick={joinRoom}>Join Room</button>
-    </div>
-  );
-};
+      const videoElement = document.createElement('video');
+      videoElement.srcObject = this.localStream;
+      videoElement.autoplay = true;
+      document.body.appendChild(videoElement);
+
+      this.socket.emit('joinRoom', { room_id: this.roomId, name: this.name }, (peers: any) => {
+        console.log('Joined room', peers);
+      });
+    } catch (error) {
+      console.error('Error accessing media devices.', error);
+    }
+  }
+}
 
 export default RoomClient;
+
+
 
 
 

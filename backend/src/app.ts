@@ -1,18 +1,17 @@
-// src/app.ts
 import express from 'express';
 import fs from 'fs';
-import http2 from 'http2';
+import spdy from 'spdy';
 import { Server } from 'socket.io';
 import { createWorker } from 'mediasoup';
 import config from './config';
 import { Room } from './Room';
 import { Peer } from './Peer';
-import http2Express from 'http2-express-bridge';
+import path from 'path';
 
-const app = http2Express(express);
+const app = express();
 const options = {
-  key: fs.readFileSync('./ssl/key.pem', 'utf8'),
-  cert: fs.readFileSync('./ssl/cert.pem', 'utf8')
+  key: fs.readFileSync(path.join(__dirname, '../ssl/key.pem'), 'utf8'),
+  cert: fs.readFileSync(path.join(__dirname, '../ssl/cert.pem'), 'utf8')
 };
 
 // Middleware para logs de requisições
@@ -21,21 +20,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve arquivos estáticos do diretório public
-app.use(express.static('public'));
-
-// Rota de teste para verificar se o servidor está respondendo
-app.get('/test', (req, res) => {
-  res.send('Servidor está rodando corretamente.');
-});
+// Serve arquivos estáticos do diretório build
+app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
 // Rota padrão para verificar se o servidor está respondendo
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/build', 'index.html'));
 });
 
-// Use http2 para criar o servidor HTTPS/2
-const httpsServer = http2.createSecureServer(options, app);
+// Use spdy para criar o servidor HTTPS/2
+const httpsServer = spdy.createServer(options, app);
 const io = new Server(httpsServer);
 
 let workers: any[] = [];
@@ -69,7 +63,7 @@ io.on('connection', (socket) => {
       nextMediasoupWorkerIdx++;
       if (nextMediasoupWorkerIdx === workers.length) nextMediasoupWorkerIdx = 0;
       const room = new Room(room_id, worker, io);
-      await room.initializeRouter(worker); // Certifique-se de que o Router está inicializado
+      await room.initializeRouter(worker);
       roomList.set(room_id, room);
     }
 
@@ -105,7 +99,7 @@ io.on('connection', (socket) => {
       try {
         const transport = await room.createWebRtcTransport(socket.id);
         if (transport) {
-          const params = transport; // Ajuste aqui para acessar os parâmetros necessários do transport
+          const params = transport;
           callback(params);
         }
       } catch (err) {
