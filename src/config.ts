@@ -17,11 +17,11 @@ const getLocalIp = () => {
   return localIp
 }
 
-module.exports = {
-  listenIp: '0.0.0.0',
+const config = {
+  listenIp: '172.18.12.93',
   listenPort: 3016,
-  sslCrt: '../ssl/cert.pem',
-  sslKey: '../ssl/key.pem',
+  sslCrt: './ssl/cert.pem',
+  sslKey: './ssl/key.pem',
 
   mediasoup: {
     // Worker settings
@@ -67,7 +67,7 @@ module.exports = {
     webRtcTransport: {
       listenIps: [
         {
-          ip: '0.0.0.0',
+          ip: '172.18.12.93',
           announcedIp: getLocalIp() // replace by public IP address
         }
       ],
@@ -76,3 +76,5 @@ module.exports = {
     }
   }
 }
+
+export default config;

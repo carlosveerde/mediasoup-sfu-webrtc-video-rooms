@@ -1,3 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mediasoup SFU</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script src="modules/EventEmitter.min.js"></script>
+  <script src="modules/mediasoupclient.min.js"></script>
+  <script src="modules/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+<!--
+
 <html>
     <head>
         <meta charset="utf-8" />
@@ -19,7 +40,7 @@
             <div id="login">
                 <br />
                 <i class="fas fa-server"> Room: </i><input id="roomidInput" value="123" type="text" />
-                <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+                <button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>
                 <i class="fas fa-user"> User: </i><input id="nameInput" value="user" type="text" />
                 <button id="joinButton" onclick="joinRoom(nameInput.value, roomidInput.value)">
                     <i class="fas fa-sign-in-alt"></i> Join
@@ -81,9 +102,9 @@
             <div id="videoMedia" class="hidden">
                 <h4><i class="fab fa-youtube"></i> Local media</h4>
                 <div id="localMedia" class="containers">
-                    <!--<video id="localVideo" autoplay inline class="vid"></video>-->
-                    <!--<video id="localScreen" autoplay inline class="vid"></video>-->
-                </div>
+                    <video id="localVideo" autoplay inline class="vid"></video>
+                    <video id="localScreen" autoplay inline class="vid"></video>
+                <!-- </div>
                 <br />
                 <h4><i class="fab fa-youtube"></i> Remote media</h4>
                 <div id="remoteVideos" class="containers"></div>
@@ -95,4 +116,4 @@
     <footer>
         <script src="index.js"></script>
     </footer>
-</html>
+</html> -->
