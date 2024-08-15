@@ -1,35 +1,17 @@
-import React, { useState } from 'react';
-import RoomClient from './RoomClient';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import Room from './Room';
+import './App.css';
 
 const App: React.FC = () => {
-  const [roomId, setRoomId] = useState('');
-  const [name, setName] = useState('');
-  const [roomClient, setRoomClient] = useState<RoomClient | null>(null);
-
-  const handleJoin = () => {
-    if (roomId && name) {
-      const client = new RoomClient(roomId, name);
-      setRoomClient(client);
-    }
-  };
-
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Room ID"
-        value={roomId}
-        onChange={(e) => setRoomId(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Your Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button onClick={handleJoin}>Join Room</button>
-      {roomClient && <div>Room client initialized</div>}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/room/:roomId" element={<Room />} />
+      </Routes>
+    </Router>
   );
 };
 

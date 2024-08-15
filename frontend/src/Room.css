@@ -1,0 +1,154 @@
+.room-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #1A73E8;
+    color: white;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #185ABC;
+  }
+  
+  .header .logo img {
+    height: 60px;
+  }
+  
+  .header .title h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .header .title p {
+    margin: 5px 0 0;
+    font-size: 14px;
+  }
+  
+  .video-section {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .main-video {
+    flex: 3;
+    position: relative;
+    background-color: black;
+    border-radius: 8px;
+  }
+  
+  .main-video video {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .main-video-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+  }
+  
+  .participant-videos {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 20px;
+  }
+  
+  .participant {
+    flex: 1 1 30%;
+    background-color: #333;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .participant p {
+    margin: 5px 0 0;
+    font-size: 12px;
+  }
+  
+  .side-section {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    background-color: #2E74DA;
+  }
+  
+  .participants-list {
+    flex: 1;
+    padding: 20px;
+    border-bottom: 1px solid #1A73E8;
+  }
+  
+  .participants-list h3 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  .participants-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .participants-list li {
+    padding: 5px 0;
+  }
+  
+  .chat-section {
+    flex: 2;
+    padding: 20px;
+  }
+  
+  .chat-section h3 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  .chat-section .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  .chat-section input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #185ABC;
+  }
+  
+  .footer button {
+    font-size: 18px;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: #fff;
+    color: #1A73E8;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .footer button:hover {
+    background-color: #ccc;
+  }
+  
